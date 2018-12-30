@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import '../assets/styles/App.css';
 import Header from './Header.jsx';
 import Board from './Board.jsx';
 
@@ -17,8 +17,17 @@ class App extends Component {
               ["-","-","-"]
           ]
       }
+      this.appClick=this.appClick.bind(this);
   }
-    
+
+  appClick(rowIndex,columnIndex){
+      let newValues = JSON.parse(JSON.stringify(this.state.values));
+      newValues[rowIndex][columnIndex]=this.state.turn===PLAYERX? "X":"0";
+      this.setState({
+         turn: this.state.turn===PLAYERX? PLAYER0:PLAYERX,
+         values:newValues
+      });
+  }
     
   render() {
     let text = "Turn of " + this.state.turn;
@@ -26,7 +35,7 @@ class App extends Component {
     return (
        <div>
          <Header text={text}></Header>
-         <Board values={this.state.values}/>
+         <Board appClick={this.appClick} values={this.state.values}/>
        </div>
     );
   }
